@@ -21,3 +21,10 @@ insert into user(username, password, phone, email, gender, birthday, personal_br
                  last_login_date, account_expired, account_locked) values ('test','123456','13012341234','test@test',
                                                                            'male','2020-02-22','no info','','',0,0);
 select * from user;
+
+create table persistent_logins(
+    username varchar(64) not null,
+    series varchar(64) primary key,
+    token varchar(64) not null,
+    last_used timestamp not null
+);

@@ -1,11 +1,10 @@
 package fun.haarf.blog.controller;
 
+import fun.haarf.blog.entity.User;
 import fun.haarf.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -18,9 +17,24 @@ public class UserController {
         return "hello";
     }
 
-    @GetMapping("/index")
-    public Object index() {
-        return SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/authentication/session/invalid")
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public String sessionInvalid() {
+        return "session expired";
     }
 
+    @PostMapping("/authentication/register")
+    public boolean register(User user) {
+        return userService.registerUser(user);
+    }
+
+    @GetMapping("/info")
+    public User getInfo(User user) {
+        return userService.getUser(user);
+    }
+
+    @PostMapping("/info")
+    public boolean updateInfo(User user) {
+        return userService.updateUser(user);
+    }
 }

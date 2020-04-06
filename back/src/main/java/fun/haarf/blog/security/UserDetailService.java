@@ -21,6 +21,8 @@ public class UserDetailService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,7 +35,7 @@ public class UserDetailService implements UserDetailsService {
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
-                new BCryptPasswordEncoder().encode(user.getPassword()),
+                user.getPassword(),
                 true,
                 user.getAccountExpired() == Global.INT_FALSE,
                 true,

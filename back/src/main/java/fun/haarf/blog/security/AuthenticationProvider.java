@@ -13,13 +13,15 @@ public class AuthenticationProvider implements org.springframework.security.auth
 
     @Autowired
     private UserDetailService userDetailService;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
         UserDetails userDetails = userDetailService.loadUserByUsername(username);
-        if (new BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
+        if (encoder.matches(password, userDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
         }
 
@@ -30,4 +32,5 @@ public class AuthenticationProvider implements org.springframework.security.auth
     public boolean supports(Class<?> aClass) {
         return true;
     }
+
 }

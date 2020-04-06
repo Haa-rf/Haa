@@ -4,19 +4,22 @@ import fun.haarf.blog.entity.User;
 import fun.haarf.blog.jpa.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public boolean registerUser(User user) {
         User fundUser = userRepository.findByUsername(user.getUsername());
         if (fundUser != null) {
             return false;
         }
-
+        user.setPassword(encoder.encode(user.getPassword()));
         userRepository.saveAndFlush(user);
         return true;
     }
@@ -37,7 +40,8 @@ public class UserService {
         }
         user.setId(fundUser.getId());
         user.setUsername(fundUser.getUsername());
-        user.setPassword(StringUtils.isBlank(user.getPassword()) ? fundUser.getPassword() : user.getPassword());
+        user.setPassword(StringUtils.isBlank(user.getPassword()) ? fundUser.getPassword() :
+                encoder.encode(user.getPassword()));
         user.setPhone(StringUtils.isBlank(user.getPhone()) ? fundUser.getPhone() : user.getPhone());
         user.setEmail(StringUtils.isBlank(user.getEmail()) ? fundUser.getEmail() : user.getEmail());
         user.setGender(StringUtils.isBlank(user.getGender()) ? fundUser.getGender() : user.getGender());
@@ -51,4 +55,6 @@ public class UserService {
         userRepository.saveAndFlush(user);
         return true;
     }
+
+
 }

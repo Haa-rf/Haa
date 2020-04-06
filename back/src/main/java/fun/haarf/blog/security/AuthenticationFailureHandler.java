@@ -21,6 +21,7 @@ public class AuthenticationFailureHandler implements org.springframework.securit
         httpServletResponse.setContentType("application/json;charset=utf-8");
         ResponseVo responseVo = new ResponseVo();
         responseVo.setResult("failure");
+        responseVo.setType("login");
         responseVo.setMessage(e.getMessage());
         httpServletResponse.getWriter().write(mapper.writeValueAsString(responseVo));
     }

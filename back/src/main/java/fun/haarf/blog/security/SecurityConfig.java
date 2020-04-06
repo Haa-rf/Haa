@@ -22,6 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
     @Autowired
     private UserDetailService userDetailService;
+    @Autowired
+    private SessionExpiredStrategy sessionExpiredStrategy;
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
 
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
@@ -34,13 +38,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().antMatchers("/user/login").permitAll().anyRequest().authenticated()
+                .authorizeRequests().antMatchers("/user/authentication/*").permitAll().anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/user/login").loginProcessingUrl("/user/login").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
+                .formLogin().loginPage("/user/authentication/login").loginProcessingUrl("/user/authentication/login").successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler).permitAll()
                 .and()
                 .rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(60 * 60 * 24).userDetailsService(userDetailService)
                 .and()
-                .csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS).invalidSessionUrl("/user/authentication" +
+                "/session/invalid").maximumSessions(3).expiredSessionStrategy(sessionExpiredStrategy)
+                .and()
+                .and()
+                .logout().logoutUrl("/user/authentication/logout").logoutSuccessHandler(logoutSuccessHandler).deleteCookies()
+                .and()
+                .csrf().disable()
         ;
     }
 }

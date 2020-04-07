@@ -4,15 +4,15 @@ show databases;
 use blog;
 create table user(
     id int(11) not null auto_increment,
-    username varchar(100) not null default '',
-    password varchar(200) not null default '',
-    phone varchar(100) not null default '',
-    email varchar(100) not null default '',
-    gender varchar(100) not null default '',
-    birthday varchar(100) not null default '',
-    personal_brief_intro varchar(255) default '',
-    avatar_img_url varchar(255) not null default '',
-    last_login_date varchar(255) not null default '',
+    username varchar(100) not null,
+    password varchar(200) not null,
+    phone varchar(100) not null,
+    email varchar(100) not null,
+    gender varchar(100) not null,
+    birthday varchar(100),
+    personal_brief_intro varchar(255),
+    avatar_img_url varchar(255) not null,
+    last_login_date bigint(15) not null,
     account_expired tinyint(1) not null default 0,
     account_locked tinyint(1) not null default 0,
     primary key(id)
@@ -27,4 +27,11 @@ create table persistent_logins(
     series varchar(64) primary key,
     token varchar(64) not null,
     last_used timestamp not null
+);
+
+create table article(
+    id int(11) not null auto_increment,
+    article_id varchar(25) not null,
+
+    primary key(id)
 );

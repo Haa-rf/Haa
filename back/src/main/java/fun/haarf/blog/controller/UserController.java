@@ -1,6 +1,7 @@
 package fun.haarf.blog.controller;
 
 import fun.haarf.blog.entity.User;
+import fun.haarf.blog.model.UserVo;
 import fun.haarf.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/info")
-    public boolean updateInfo(User user) {
+    public boolean updateInfo(UserVo user) {
         return userService.updateUser(user);
     }
 }

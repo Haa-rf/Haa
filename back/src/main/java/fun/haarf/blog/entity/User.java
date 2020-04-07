@@ -22,7 +22,7 @@ public class User implements Serializable {
     private String birthday;
     private String personalBriefIntro;
     private String avatarImgUrl;
-    private String lastLoginDate;
+    private long lastLoginDate;
     private int accountExpired;
     private int accountLocked;
 }

@@ -89,11 +89,11 @@ commit;
 drop table if exists tb_category;
 create table tb_category(
                             id int(11) not null auto_increment,
-                            name varchar(100) not null ,
+                            value varchar(100) not null ,
                             primary key (id)
 );
 begin;
-insert into tb_category(name) values ('springboot');
+insert into tb_category(value) values ('springboot');
 commit;
 
 -- ----------------------------
@@ -116,11 +116,11 @@ commit;
 drop table if exists tb_tag;
 create table tb_tag(
                             id int(11) not null auto_increment,
-                            name varchar(100) not null ,
+                            value varchar(100) not null ,
                             primary key (id)
 );
 begin;
-insert into tb_tag(name) values ('test tag');
+insert into tb_tag(value) values ('test tag');
 commit;
 
 -- ----------------------------

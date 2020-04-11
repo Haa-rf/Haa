@@ -71,14 +71,14 @@ create table tb_article(
                            origin varchar(255),
                            content mediumtext,
                            content_md mediumtext,
-                           state varchar(100) NOT NULL,
+                           status varchar(100) NOT NULL,
                            create_time bigint(20) not null,
                            publish_time bigint(20),
                            last_edit_time bigint(20),
                            primary key (id)
 );
 begin;
-insert into tb_article (title, cover, author, type, origin, content, content_md, state, create_time, publish_time,
+insert into tb_article (title, cover, author, type, origin, content, content_md, status, create_time, publish_time,
                         last_edit_time) VALUES ('How to write an article?', 'test-img-url',
 'test',0,'article-url', '<h1>test content</h1>','#test content','created',32432423442,3234234234234,null);
 commit;

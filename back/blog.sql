@@ -142,7 +142,7 @@ commit;
 -- ----------------------------
 drop table if exists tb_article_info;
 create table tb_article_info(
-                               id bigint(11) not null auto_increment,
+                               id int(11) not null auto_increment,
                                article_id int(11) not null,
                                read_number int(11) not null default 0,
                                like_number int(11) not null default 0,
@@ -178,9 +178,9 @@ commit;
 -- ----------------------------
 -- tb_link
 -- ----------------------------
-drop table if exists link;
-create table link(
-                     id bigint(20) not null auto_increment,
+drop table if exists tb_link;
+create table tb_link(
+                     id int(11) not null auto_increment,
                      name varchar(100),
                      url varchar(255),
                      primary key (id)

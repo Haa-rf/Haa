@@ -20,8 +20,8 @@ public class User implements Serializable {
     private String email;
     private String gender;
     private String birthday;
-    private String personalBriefIntro;
-    private String avatarImgUrl;
+    private String introduce;
+    private String avatar;
     private long lastLoginDate;
     private int accountExpired;
     private int accountLocked;

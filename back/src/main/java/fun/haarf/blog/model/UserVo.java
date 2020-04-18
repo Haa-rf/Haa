@@ -15,6 +15,6 @@ public class UserVo implements Serializable {
     private String email;
     private String gender;
     private String birthday;
-    private String personalBriefIntro;
-    private String avatarImgUrl;
+    private String introduce;
+    private String avatar;
 }

@@ -30,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/info")
-    public User getInfo(User user) {
-        return userService.getUser(user);
+    public User getInfo(String username) {
+        return userService.getUser(username);
     }
 
     @PostMapping("/info")

@@ -15,6 +15,9 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    /**
+     * register a user
+     */
     public boolean registerUser(User user) {
         User fundUser = userRepository.findByUsername(user.getUsername());
         if (fundUser != null) {
@@ -26,8 +29,11 @@ public class UserService {
         return true;
     }
 
-    public User getUser(User user) {
-        User fundUser = userRepository.findByUsername(user.getUsername());
+    /**
+     * get a user by username
+     */
+    public User getUser(String username) {
+        User fundUser = userRepository.findByUsername(username);
         if (fundUser == null) {
             return new User();
         }
@@ -35,6 +41,9 @@ public class UserService {
         return fundUser;
     }
 
+    /**
+     * update user info
+     */
     public boolean updateUser(UserVo userVo) {
         User fundUser = userRepository.findByUsername(userVo.getUsername());
         if (fundUser == null) {
@@ -46,13 +55,17 @@ public class UserService {
         fundUser.setEmail(StringUtils.isBlank(userVo.getEmail()) ? fundUser.getEmail() : userVo.getEmail());
         fundUser.setGender(StringUtils.isBlank(userVo.getGender()) ? fundUser.getGender() : userVo.getGender());
         fundUser.setBirthday(StringUtils.isBlank(userVo.getBirthday()) ? fundUser.getBirthday() : userVo.getBirthday());
-        fundUser.setPersonalBriefIntro(StringUtils.isBlank(userVo.getPersonalBriefIntro()) ? fundUser.getPersonalBriefIntro()
-                : userVo.getPersonalBriefIntro());
-        fundUser.setAvatarImgUrl(StringUtils.isBlank(userVo.getAvatarImgUrl()) ? fundUser.getAvatarImgUrl() : userVo.getAvatarImgUrl());
+        fundUser.setIntroduce(StringUtils.isBlank(userVo.getIntroduce()) ? fundUser.getIntroduce()
+                : userVo.getIntroduce());
+        fundUser.setAvatar(StringUtils.isBlank(userVo.getAvatar()) ? fundUser.getAvatar() :
+                userVo.getAvatar());
         userRepository.saveAndFlush(fundUser);
         return true;
     }
 
+    /**
+     * update user last login time when successful
+     */
     public boolean updateLastLoginDate(String username, long date) {
         User fundUser = userRepository.findByUsername(username);
         if (fundUser == null) {
@@ -62,5 +75,7 @@ public class UserService {
         userRepository.saveAndFlush(fundUser);
         return true;
     }
+
+
 
 }

@@ -33,28 +33,28 @@ public class LoginLogService {
      * find one user's all login logs
      */
     public List<LoginLog> findAllByUsername(String username) {
-        return loginLogRepository.findAllByUsername(username);
+        return loginLogRepository.findByUsername(username);
     }
 
     /**
      * find one user's all login logs pageable
      */
     public Page<LoginLog> findAllByUsername(String username, Pageable pageable) {
-        return loginLogRepository.findAllByUsername(username, pageable);
+        return loginLogRepository.findByUsername(username, pageable);
     }
 
     /**
      * find one IP's all login logs
      */
     public List<LoginLog> findAllByIP(String ip) {
-        return loginLogRepository.findAllByIp(ip);
+        return loginLogRepository.findByIp(ip);
     }
 
     /**
      * find one IP's all login logs pageable
      */
     public Page<LoginLog> findAllByIP(String ip, Pageable pageable) {
-        return loginLogRepository.findAllByIp(ip, pageable);
+        return loginLogRepository.findByIp(ip, pageable);
     }
 
     /**
@@ -67,8 +67,15 @@ public class LoginLogService {
     /**
      * delete login log
      */
-    public void delete(long id){
+    public void delete(long id) {
         loginLogRepository.deleteById(id);
+    }
+
+    /**
+     * delete login logs by username
+     */
+    public void delete(String username) {
+        loginLogRepository.deleteByUsername(username);
     }
 
 }

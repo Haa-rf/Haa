@@ -9,11 +9,13 @@ import java.util.List;
 
 public interface LoginLogRepository extends JpaRepository<LoginLog, Long> {
 
-    List<LoginLog> findAllByUsername(String username);
+    List<LoginLog> findByUsername(String username);
 
-    Page<LoginLog> findAllByUsername(String username, Pageable pageable);
+    Page<LoginLog> findByUsername(String username, Pageable pageable);
 
-    List<LoginLog> findAllByIp(String ip);
+    List<LoginLog> findByIp(String ip);
 
-    Page<LoginLog> findAllByIp(String ip,Pageable pageable);
+    Page<LoginLog> findByIp(String ip, Pageable pageable);
+
+    void deleteByUsername(String username);
 }

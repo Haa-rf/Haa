@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <property name="LOG_HOME">./logs</property>
+        <property name="APP_NAME">${spring:spring.application.name}</property>
+        <Property name="log.pattern">%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c{3}:%M:%L - %msg%n}{FATAL=white, ERROR=red, WARN=blue, INFO=black, DEBUG=green, TRACE=blue}</Property>
+        <Property name="log.file">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %c{3}:%M:%L - %msg%n</Property>
+    </properties>
+    <Appenders>
+        <!--*********************控制台日志***********************-->
+        <Console name="consoleAppender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${log.pattern}</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <!--all级别日志-->
+        <RollingFile name="allFileAppender"
+                     fileName="${LOG_HOME}/${APP_NAME}-all.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-all-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <pattern>${log.file}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="${APP_NAME}-all-*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--debug级别日志-->
+        <RollingFile name="debugFileAppender"
+                     fileName="${LOG_HOME}/${APP_NAME}-debug.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-debug-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!--过滤掉info及更高级别日志-->
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout>
+                <pattern>${log.file}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="${APP_NAME}-debug-*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--info级别日志-->
+        <RollingFile name="infoFileAppender"
+                     fileName="${LOG_HOME}/${APP_NAME}-info.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-info-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!--过滤掉warn及更高级别日志-->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout>
+                <pattern>${log.file}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="${APP_NAME}-info-*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--warn级别日志-->
+        <RollingFile name="warnFileAppender"
+                     fileName="${LOG_HOME}/${APP_NAME}-warn.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-warn-%d{yyyy-MM-dd}-%i.log">
+            <Filters>
+                <!--过滤掉error及更高级别日志-->
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+            <PatternLayout>
+                <pattern>${log.file}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="${APP_NAME}-warn-*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <!--error及更高级别日志-->
+        <RollingFile name="errorFileAppender"
+                     fileName="${LOG_HOME}/${APP_NAME}-error.log"
+                     filePattern="${LOG_HOME}/${APP_NAME}-error-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <pattern>${log.file}</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="100">
+                <Delete basePath="${LOG_HOME}" maxDepth="2">
+                    <IfFileName glob="${APP_NAME}-error-*"/>
+                    <IfLastModified age="7d"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="allFileAppender" level="all"/>
+            <AppenderRef ref="consoleAppender" level="debug"/>
+            <AppenderRef ref="debugFileAppender" level="debug"/>
+            <AppenderRef ref="infoFileAppender" level="info"/>
+            <AppenderRef ref="warnFileAppender" level="warn"/>
+            <AppenderRef ref="errorFileAppender" level="error"/>
+        </Root>
+    </Loggers>
+
+</Configuration>

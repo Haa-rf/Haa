@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: haa-gateway
+  profiles:
+    active: dev
+  cloud:
+    consul:
+      host: 119.3.238.58
+      port: 8500
+      config:
+        enabled: true
+        prefixes: config/haa
+        default-context: gateway
+        profile-separator: '-'
+        format: yaml
+        data-key: gatewayConfig
+        watch:
+          enabled: true
+          delay: 1000
+      discovery:
+        register: true
+        instance-id: ${spring.application.name}-node1
+        service-name: ${spring.application.name}
+        port: ${server.port}
+        prefer-ip-address: true
+        heartbeat:
+          enabled: true
